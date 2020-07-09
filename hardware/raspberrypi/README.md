@@ -4,6 +4,8 @@ The hardware in the Raspberry Pi
 
 - [Schematics](schematics/README.md)
     - Schematics for the Raspberry Pi
+- [Datasheets](datasheets.md)
+    - Datasheets for the Raspberry Pi
 - [BCM2835](bcm2835/README.md)
     - The Broadcom processor used in Raspberry Pi 1 and Zero
 - [BCM2836](bcm2836/README.md)
@@ -16,6 +18,8 @@ The hardware in the Raspberry Pi
     - The Broadcom processor used in Raspberry Pi 4B
 - [SPI Boot EEPROM (Pi4)](booteeprom.md)
     - The boot EEPROM used in Raspberry Pi 4B
+- [Boot Diagnostics Display (Pi4)](boot_diagnostics.md)
+    - The boot diagnostics display on Raspberry Pi 4B
 - [Boot modes](bootmodes/README.md)
     - A description of the available BCM2835/6/7 boot modes
 - [Mechanical drawings](mechanical/README.md)
@@ -36,7 +40,7 @@ The hardware in the Raspberry Pi
     - Conformance documentation for the various standards bodies
 - [Revision codes](revision-codes/README.md)
     - Raspberry Pi revision code reference
-- [OTP Bit definitions](otpbits.md)
-    - Register and bit definitons for the One-Time Programmable (OTP) memory on the Raspberry Pi
+- [OTP bit definitions](otpbits.md)
+    - Register and bit definitions for the One-Time Programmable (OTP) memory on the Raspberry Pi
 - [Processor frequency and thermal management](frequency-management.md)
     - Information on how the Raspberry Pi manages CPU frequencies and heat dissipation

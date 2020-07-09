@@ -1,6 +1,6 @@
 # OMXPlayer: An accelerated command line media player
 
-Installed on Raspbian is a command line media player, called OMXPlayer. This is HW accelerated, and can play back many popular audio and video file formats.
+Installed on Raspberry Pi OS is a command line media player, called OMXPlayer. This is HW accelerated, and can play back many popular audio and video file formats.
 
 OMXPlayer was developed by the Kodi project's Edgar Hucek.
 
@@ -8,7 +8,7 @@ OMXPlayer uses the OpenMAX (omx) hardware acceleration interface (API) which is 
 
 ## Basic usage
 
-The simplest command line is `omxplayer <name of media file>`. The media file can be audio or video or both. For the examples below, we used an H264 video file that is included with the standard Raspbian installation.
+The simplest command line is `omxplayer <name of media file>`. The media file can be audio or video or both. For the examples below, we used an H264 video file that is included with the standard Raspberry Pi OS installation.
 
 ```
 omxplayer /opt/vc/src/hello_pi/hello_video/test.h264
@@ -31,7 +31,7 @@ You can also specify which part of the video you want to be displayed: this is c
 ```
 omxplayer --crop 100,100,300,300 /opt/vc/src/hello_pi/hello_video/test.h264
 ```
-If you are using the Raspberry Pi Foundation's touchscreen display, and you want to use it for video output, use the display option to specify which display to use. `n` is 5 for HDMI, 4 for the touchscreen.
+If you are using the Raspberry Pi Foundation's touchscreen display, and you want to use it for video output, use the display option to specify which display to use. `n` is 5 for HDMI, 4 for the touchscreen. With the Raspberry Pi 4 you have two options for HDMI output. `n` is 2 for HDMI0 and 7 for HDMI1.
 
 ```
 omxplayer --display n /opt/vc/src/hello_pi/hello_video/test.h264

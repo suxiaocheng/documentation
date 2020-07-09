@@ -14,14 +14,14 @@ Revision    : a02082
 Serial      : 00000000765fc593
 ```
 
-*Note: As of the 4.9 kernel, all Pis report `BCM2835`, even those with BCM2836 and BCM2837 processors. You should not use this string to detect the processor.*
+*Note: As of the 4.9 kernel, all Pis report `BCM2835`, even those with BCM2836, BCM2837 and BCM2711 processors. You should not use this string to detect the processor. Decode the revision code using the information below, or `cat /sys/firmware/devicetree/base/model`*
 
 ## Old-style revision codes
 
-The first set of Raspberry Pi revisions were given sequential hex revision codes from `0002` to `0015`:
+The first set of Raspberry Pi models were given sequential hex revision codes from `0002` to `0015`:
 
-| Code | Model | Revision | RAM             | Manufacturer |
-| ---- | ----- | -------- | --------------- | ------------ |
+| Code | Model | Revision | RAM            | Manufacturer |
+| ---- | ----- | -------- | -------------- | ------------ |
 | 0002 | B     | 1.0      | 256MB          | Egoman       |
 | 0003 | B     | 1.0      | 256MB          | Egoman       |
 | 0004 | B     | 2.0      | 256MB          | Sony UK      |
@@ -38,26 +38,36 @@ The first set of Raspberry Pi revisions were given sequential hex revision codes
 | 0012 | A+    | 1.1      | 256MB          | Sony UK      |
 | 0013 | B+    | 1.2      | 512MB          | Embest       |
 | 0014 | CM1   | 1.0      | 512MB          | Embest       |
-| 0015 | A+    | 1.1      | 256MB/512MB | Embest       |
+| 0015 | A+    | 1.1      | 256MB/512MB    | Embest       |
 
 ## New-style revision codes
 
 With the launch of the Raspberry Pi 2, new-style revision codes were introduced. Rather than being sequential, each bit of the hex code represents a piece of information about the revision:
 
 ```
-uuuuuuuuFMMMCCCCPPPPTTTTTTTTRRRR
+NOQuuuWuFMMMCCCCPPPPTTTTTTTTRRRR
 ```
 
 | Part     | Represents   | Options                    |
 | -------- | ------------ | -------------------------- |
-| uuuuuuuu | Unused       | Unused                     |
+| N        | Overvoltage  | 0: Overvoltage allowed     |
+|          |              | 1: Overvoltage disallowed    |
+| O        | OTP Program<sup>1</sup> | 0: OTP programming allowed |
+|          |              | 1: OTP programming disallowed |
+| Q        | OTP Read<sup>1</sup> | 0: OTP reading allowed |
+|          |              | 1: OTP reading disallowed    |
+| uuu      | Unused       | Unused                     |
+| W        | Warranty bit | 0: Warranty is intact      |
+|          |              | 1: Warranty has been voided by [overclocking](../../../configuration/config-txt/overclocking.md) |
+| u        | Unused       | Unused                     |
 | F        | New flag     | 1: new-style revision      |
 |          |              | 0: old-style revision      |
-| MMM      | Memory size  | 0: 256MB                  |
-|          |              | 1: 512MB                  |
-|          |              | 2: 1GB                    |
-|          |              | 3: 2GB                    |
-|          |              | 4: 4GB                    |
+| MMM      | Memory size  | 0: 256MB                   |
+|          |              | 1: 512MB                   |
+|          |              | 2: 1GB                     |
+|          |              | 3: 2GB                     |
+|          |              | 4: 4GB                     |
+|          |              | 5: 8GB                     |
 | CCCC     | Manufacturer | 0: Sony UK                 |
 |          |              | 1: Egoman                  |
 |          |              | 2: Embest                  |
@@ -86,6 +96,9 @@ uuuuuuuuFMMMCCCCPPPPTTTTTTTTRRRR
 |          |              | 11: 4B                     |
 | RRRR     | Revision     | 0, 1, 2, etc.              |
 
+<sup>1</sup> Information on programming the OTP bits can be found [here](../../industrial/README.md) and [here](../otpbits.md).
+
+
 New-style revision codes in use:
 
 | Code   | Model             | Revision | RAM    | Manufacturer |
@@ -104,6 +117,7 @@ New-style revision codes in use:
 | a02082 | 3B                | 1.2      | 1GB   | Sony UK      |
 | a020a0 | CM3               | 1.0      | 1GB   | Sony UK      |
 | a020d3 | 3B+               | 1.3      | 1GB   | Sony UK      |
+| a02042 | 2B (with BCM2837) | 1.2      | 1GB   | Sony UK      |
 | a21041 | 2B                | 1.1      | 1GB   | Embest       |
 | a22042 | 2B (with BCM2837) | 1.2      | 1GB   | Embest       |
 | a22082 | 3B                | 1.2      | 1GB   | Embest       |
@@ -114,4 +128,7 @@ New-style revision codes in use:
 | a02100 | CM3+              | 1.0      | 1GB   | Sony UK      |
 | a03111 | 4B                | 1.1      | 1GB   | Sony UK      |
 | b03111 | 4B                | 1.1      | 2GB   | Sony UK      |
+| b03112 | 4B                | 1.2      | 2GB   | Sony UK      |
 | c03111 | 4B                | 1.1      | 4GB   | Sony UK      |
+| c03112 | 4B                | 1.2      | 4GB   | Sony UK      |
+| d03114 | 4B                | 1.4      | 8GB   | Sony UK      |

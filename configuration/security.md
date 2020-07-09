@@ -10,7 +10,7 @@ Even if you are hidden behind a firewall, it is sensible to take security seriou
 
 ## Change your default password
 
-The default username and password is used for every single Raspberry Pi running Raspbian. So, if you can get access to a Raspberry Pi, and these settings have not been changed, you have `root` access to that Raspberry Pi.
+The default username and password is used for every single Raspberry Pi running Raspberry Pi OS. So, if you can get access to a Raspberry Pi, and these settings have not been changed, you have `root` access to that Raspberry Pi.
 
 So the first thing to do is change the password. This can be done via the raspi-config application, or from the command line.
 
@@ -40,21 +40,27 @@ You will be prompted to create a password for the new user.
 
 The new user will have a home directory at `/home/alice/`.
 
-To add them to the `sudo` group to give them `sudo` permissions:
+To add them to the `sudo` group to give them `sudo` permissions as well as all of the other necessary permissions:
 
 ```bash
-sudo adduser alice sudo
+sudo usermod -a -G adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,gpio,i2c,spi alice
 ```
 
 You can check your permissions are in place (i.e. you can use `sudo`) by trying the following:
 
 ```bash
-sudo su
+sudo su - alice
 ```
 
 If it runs successfully, then you can be sure that the new account is in the `sudo` group.
 
-Once you have confirmed that the new account is working, you can delete the `pi` user. Please note, though, that with the current Raspbian distribution, there are some aspects that require the `pi` user to be present. If you are unsure whether you will be affected by this, then leave the `pi` user in place. Work is being done to reduce the dependency on the `pi` user.
+Once you have confirmed that the new account is working, you can delete the `pi` user. In order to do this, you'll need to first close its process with the following:
+
+```bash
+sudo pkill -u pi
+```
+
+Please note that with the current Raspberry Pi OS distribution, there are some aspects that require the `pi` user to be present. If you are unsure whether you will be affected by this, then leave the `pi` user in place. Work is being done to reduce the dependency on the `pi` user.
 
 To delete the `pi` user, type the following:
 
@@ -70,12 +76,12 @@ sudo deluser -remove-home pi
 
 ## Make `sudo` require a password
 
-Placing `sudo` in front of a command runs it as a superuser, and by default, that does not need a password. In general, this is not a problem. However, if your Pi is exposed to the internet and somehow becomes exploited (perhaps via a webpage exploit for example), the attacker will be able to change things that require superuser credential, unless you have set `sudo` to require a password.
+Placing `sudo` in front of a command runs it as a superuser, and by default, that does not need a password. In general, this is not a problem. However, if your Pi is exposed to the internet and somehow becomes exploited (perhaps via a webpage exploit for example), the attacker will be able to change things that require superuser credentials, unless you have set `sudo` to require a password.
 
 To force `sudo` to require a password, enter:
 
 ```bash
-sudo nano /etc/sudoers.d/010_pi-nopasswd
+sudo visudo /etc/sudoers.d/010_pi-nopasswd
 ```
 
 and change the `pi` entry (or whichever usernames have superuser rights) to:
@@ -84,11 +90,11 @@ and change the `pi` entry (or whichever usernames have superuser rights) to:
 pi ALL=(ALL) PASSWD: ALL
 ```
 
-Now save the file.
+Then save the file: it will be checked for any syntax errors. If no errors were detected, the file will be saved and you will be returned to the shell prompt. If errors were detected, you will be asked 'what now?' Press the 'enter' key on your keyboard: this will bring up a list of options. You will probably want to use 'e' for '(e)dit sudoers file again,' so you can edit the file and fix the problem. **Note that choosing option 'Q' will save the file with any syntax errors still in place, which makes it impossible for _any_ user to use the sudo command.**
 
 ## Ensure you have the latest security fixes
 
-This can be as simple as ensuring your version of Raspbian is up-to-date, as an up-to-date distribution contains all the latest security fixes. Full instructions can be found [here](../raspbian/updating.md).
+This can be as simple as ensuring your version of Raspberry Pi OS is up-to-date, as an up-to-date distribution contains all the latest security fixes. Full instructions can be found [here](../raspbian/updating.md).
 
 If you are using SSH to connect to your Raspberry Pi, it can be worthwhile to add a cron job that specifically updates the ssh-server. The following command, perhaps as a daily cron job, will ensure you have the latest SSH security fixes promptly, independent of your normal update process. More information on setting up cron can be found [here](../linux/usage/cron.md)
 
@@ -113,13 +119,13 @@ sudo nano /etc/ssh/sshd_config
 Add, edit, or append to the end of the file the following line, which contains the usernames you wish to allow to log in:
 
 ```
-AllowUsers edward andrew charles anne
+AllowUsers alice bob
 ```
 
 You can also use `DenyUsers` to specifically stop some usernames from logging in:
 
 ```
-DenyUsers harry william
+DenyUsers jane john
 ```
 
 After the change you will need to restart the `sshd` service using `sudo systemctl restart ssh` or reboot so the changes take effect.
@@ -134,21 +140,7 @@ Generating a key pair in Linux is done using the `ssh-keygen` command on the **c
 
 You will be prompted for a passphrase during key generation: this is an extra level of security. For the moment, leave this blank.
 
-The public key now needs to be moved on to the server. This can be done by email, or cut and paste, or file copying. Once on the server it needs to be added to the SSH systems authorised keys. It should be emphasised that the `id_rsa` file is the private key and SHOULD NOT LEAVE THE CLIENT, whilst the public key file is `id_rsa.pub`.
-
-Add the new public key to the authorisation file as follows:
-
-```vash
-cat id_rsa.pub >> ~/.ssh/authorized_keys
-```
-
-Alternatively, you can edit the file `sudo nano ~/.ssh/authorized_keys` and copy/paste the key in. It is perfectly acceptable to have multiple entries in the authorized_keys file, so SSH can support multiple clients.
-
-Note that the authorized_keys file needs the correct permissions to be read correctly by the `ssh` system.
-
-```bash
-sudo chmod 644 ~/.ssh/authorized_keys
-```
+The public key now needs to be moved on to the server: see [Copy your public key to your Raspberry Pi](../remote-access/ssh/passwordless.md#copy-your-public-key-to-your-raspberry-pi).
 
 Finally, we need to disable password logins, so that all authentication is done by the key pairs.
 
@@ -168,7 +160,7 @@ Save the file and either restart the ssh system with `sudo service ssh reload` o
 
 ## Install a firewall
 
-There are many firewall solutions available for Linux. Most use the underlying [iptables](http://www.netfilter.org/projects/iptables/index.html) project to provide packet filtering. This project sits over the Linux netfiltering system. `iptables` is installed by default on Raspbian, but is not set up. Setting it up can be a complicated task, and one project that provides a simpler interface than `iptables` is [ufw](https://www.linux.com/learn/introduction-uncomplicated-firewall-ufw), which stands for 'Uncomplicated Fire Wall'. This is the default firewall tool in Ubuntu, and can be easily installed on your Raspberry Pi:
+There are many firewall solutions available for Linux. Most use the underlying [iptables](http://www.netfilter.org/projects/iptables/index.html) project to provide packet filtering. This project sits over the Linux netfiltering system. `iptables` is installed by default on Raspberry Pi OS, but is not set up. Setting it up can be a complicated task, and one project that provides a simpler interface than `iptables` is [ufw](https://www.linux.com/learn/introduction-uncomplicated-firewall-ufw), which stands for 'Uncomplicated Fire Wall'. This is the default firewall tool in Ubuntu, and can be easily installed on your Raspberry Pi:
 
 ```bash
 sudo apt install ufw
@@ -241,8 +233,6 @@ Install fail2ban using the following command:
 ```bash
 sudo apt install fail2ban
 ```
-
-Note that the version of Fail2ban in the repository (v0.8.13) does not support IPv6 networks. If you use IPv6, you will need to install version v0.10 or higher from source. Please see the [Fail2ban](http://www.fail2ban.org) website for more information on how to do this.
 
 On installation, Fail2ban creates a folder `/etc/fail2ban` in which there is a configuration file called `jail.conf`. This needs to be copied to `jail.local` to enable it. Inside this configuration file are a set of default options, together with options for checking specific services for abnormalities. Do the following to examine/change the rules that are used for `ssh`:
 

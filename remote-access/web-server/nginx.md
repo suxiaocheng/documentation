@@ -4,12 +4,25 @@ NGINX (pronounced *engine x*) is a popular lightweight web server application yo
 
 Like Apache, NGINX can serve HTML files over HTTP, and with additional modules can serve dynamic web pages using scripting languages such as PHP.
 
+## Refresh database of available packages
+
+Ensure that the package manager has up-to-date information about which packages are available:  
+
+```bash
+sudo apt update
+```
+
+You only need to do this occasionally, but it's the most likely solution if subsequent steps fail with messages like:
+```
+  404  Not Found [IP: 93.93.128.193 80]
+```
+
 ## Install NGINX
 
 First install the `nginx` package by typing the following command in to the Terminal:
 
 ```bash
-sudo apt-get install nginx
+sudo apt install nginx
 ```
 
 and start the server with:
@@ -28,13 +41,13 @@ Browse to the default web page either on the Pi or from another computer on the 
 
 ### Changing the default web page
 
-NGINX defaults its web page location to `/var/www/html` on Raspbian. Navigate to this folder and edit or replace index.nginx-debian.html as you like. You can confirm the default page location at `/etc/nginx/sites-available` on the line which starts with 'root', should you need to.
+NGINX defaults its web page location to `/var/www/html` on Raspberry Pi OS. Navigate to this folder and edit or replace index.nginx-debian.html as you like. You can confirm the default page location at `/etc/nginx/sites-available` on the line which starts with 'root', should you need to.
 
 
 ## Additional - Install PHP
 
 ```bash
-sudo apt-get install php-fpm
+sudo apt install php-fpm
 ```
 
 ### Enable PHP in NGINX

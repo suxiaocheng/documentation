@@ -4,9 +4,9 @@ On Linux, you have a choice of text editors. Some are easy-to-use but have limit
 
 ## Desktop graphical editors
 
-### Leafpad
+### Text Editor
 
-On Raspbian, you'll find an editor called Leafpad. This is a simple editor which opens in a window like a normal application. It allows use of the mouse and keyboard, and has tabs and syntax highlighting.
+When using Raspberry Pi OS Desktop, in the accessories menu there is an option to run a Text Editor. This is a simple editor which opens in a window like a normal application. It allows use of the mouse and keyboard, and has tabs and syntax highlighting.
 
 You can use keyboard shortcuts, such as `Ctrl + S` to save a file and `Ctrl + X` to exit.
 
@@ -22,7 +22,7 @@ See Vim below.
 
 ### Geany
 
-A fast and lightweight IDE, supporting many different file types, including C/C++ and Python. Installed by default on Raspbian.
+A fast and lightweight IDE, supporting many different file types, including C/C++ and Python. Installed by default on Raspberry Pi OS.
 
 ## Command-line editors
 
@@ -32,7 +32,7 @@ GNU Nano is at the easy-to-use end of command-line editors. It's installed by de
 
 ### Vi
 
-Vi is a very old (c. 1976) command-line editor, which is available on most UNIX systems and is pre-installed on Raspbian. It's succeeded by Vim (Vi Improved), which requires installation.
+Vi is a very old (c. 1976) command-line editor, which is available on most UNIX systems and is pre-installed on Raspberry Pi OS. It's succeeded by Vim (Vi Improved), which requires installation.
 
 Unlike most editors, Vi and Vim have a number of different modes. When you open Vi with `vi somefile.txt`, you start in command mode which doesn't directly permit text entry. Press `i` to switch to insert mode in order to edit the file, and type away. To save the file you must return to command mode, so press the `Escape` key and enter `:w` (followed by `Enter`), which is the command to write the file to disk.
 
@@ -47,13 +47,13 @@ Depending on your keyboard configuration, you may find your cursor keys don't wo
 Vim is an extension of Vi and works in much the same way, with a number of improvements. Only Vi is installed by default so to get the full features of Vim, install it with APT:
 
 ```
-sudo apt-get install vim
+sudo apt install vim
 ```
 
 You can edit a file in Vim with `vim somefile.txt`. Vim also has a graphical version which opens in a window and allows interaction with the mouse. This version is installable separately:
 
 ```
-sudo apt-get install vim-gnome
+sudo apt install vim-gnome
 ```
 
 To use the graphical version of Vim, use `gvim somefile.txt`. You can save configuration in a `.vimrc` file in your user's home directory. To learn more about editing in Vi and Vim, you can run `vimtutor` and follow the tutorial.
@@ -63,7 +63,7 @@ To use the graphical version of Vim, use `gvim somefile.txt`. You can save confi
 Emacs is a GNU command-line text editor; it's powerful, extensible, and customisable. You can install it with APT:
 
 ```
-sudo apt-get install emacs
+sudo apt install emacs
 ```
 
 You can use keyboard combination commands, such as `Ctrl + X Ctrl + S` to save and `Ctrl + X Ctrl + C` to close.

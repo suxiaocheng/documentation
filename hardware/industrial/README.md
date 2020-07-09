@@ -4,7 +4,7 @@ The Raspberry Pi is often used as part of another product. This documentation de
 
 ## Customer OTP settings
 
-There are a number of OTP values that can be used. To see a list of all the OTP values, you can use:
+There are a number of OTP values that can be used. To see a list of all the [OTP values](../raspberrypi/otpbits.md), you can use:
 
 ```
 pi@raspberrypi:~ $ vcgencmd otp_dump
@@ -20,7 +20,7 @@ Also, from 36 to 43 (inclusive), there are eight rows of 32 bits available for t
 
 To program these bits, you will need to use the vcmailbox. This is a Linux driver interface to the firmware which will handle the programming of the rows. To do this, please refer to the documentation [here](https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface), and the vcmailbox example application [here](https://github.com/raspberrypi/userland/blob/master/host_applications/linux/apps/vcmailbox/vcmailbox.c).
 
-The vcmailbox application can be used directly from the command line on a Raspberry Pi Raspbian build. An example usage would be:
+The vcmailbox application can be used directly from the command line on a Raspberry Pi Raspberry Pi OS build. An example usage would be:
 
 ```
 pi@raspberrypi:~ $ /opt/vc/bin/vcmailbox 0x00010004 8 8 0 0
@@ -63,4 +63,14 @@ It is possible to lock the OTP changes to avoid them being edited again. This ca
 pi@raspberrypi:~ $ /opt/vc/bin/vcmailbox 0x00038021 8 8 0xffffffff 0xaffe0000
 ```
 
-Once locked, none of the customer OTP values can be accessed.
+Once locked, the customer OTP values can no longer be altered. Note that this locking operation is irreversible.
+
+## Making Customer OTP bits unreadable
+
+It is possible to prevent the customer OTP bits from being read at all. This can be done using a special argument with the OTP write mailbox:
+
+```
+pi@raspberrypi:~ $ /opt/vc/bin/vcmailbox 0x00038021 8 8 0xffffffff 0xaffebabe
+```
+
+ This operation is unlikely to be useful for the vast majority of users, and is irreversible.

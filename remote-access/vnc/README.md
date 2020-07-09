@@ -8,22 +8,26 @@ You will see the desktop of the Raspberry Pi inside a window on your computer or
 
 ![Pi Desktop as seen from a mobile device](images/raspberry-pi-connect.png)
 
-VNC Connect from RealVNC is included with Raspbian. It consists of both VNC Server, which allows you to control your Raspberry Pi remotely, and VNC Viewer, which allows you to control desktop computers remotely from your Raspberry Pi should you want to.
+VNC Connect from RealVNC is included with Raspberry Pi OS. It consists of both VNC Server, which allows you to control your Raspberry Pi remotely, and VNC Viewer, which allows you to control desktop computers remotely from your Raspberry Pi should you want to.
 
 You must enable VNC Server before you can use it: instructions for this are given below. By default, VNC Server gives you remote access to the graphical desktop that is running on your Raspberry Pi, as though you were sitting in front of it.
 
 However, you can also use VNC Server to gain graphical remote access to your Raspberry Pi if it is headless or not running a graphical desktop. For more information on this, see **Creating a virtual desktop**, further below. 
 
-## Enabling VNC Server
+## Installing VNC
 
-On your Raspberry Pi, run the following commands to make sure you have the latest version of VNC Connect:
+VNC is already installed on the full Raspberry Pi OS image, and can be installed via `Recommended Software` from the `Preferences` menu on other versions.
+
+If you are not using a desktop you can install it from the command line as follows:
 
 ```bash
-sudo apt-get update
-sudo apt-get install realvnc-vnc-server realvnc-vnc-viewer
+sudo apt update
+sudo apt install realvnc-vnc-server realvnc-vnc-viewer
 ```
 
-Now enable VNC Server. You can do this graphically or at the command line.
+## Enabling VNC Server
+
+You can do this graphically or at the command line.
 
 ### Enabling VNC Server graphically
 
@@ -53,7 +57,7 @@ There are two ways to connect to your Raspberry Pi. You can use either or both, 
 
 ### Establishing a direct connection
 
-Direct connections are quick and simple providing you're joined to the same private local network as your Raspberry Pi. For example, this might be a wired or wireless network at home, at school, or in the office).
+Direct connections are quick and simple providing you're joined to the same private local network as your Raspberry Pi. For example, this might be a wired or wireless network at home, at school, or in the office.
 
 - On your Raspberry Pi (using a terminal window or via SSH) use [these instructions](../ip-address.md) or run `ifconfig` to discover your private IP address. 
 

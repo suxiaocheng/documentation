@@ -6,21 +6,24 @@ The ARM cores are capable of running at up to 1.5 GHz, making the Pi 4 about 50%
 
 The BCM2711 chip continues to use the heat spreading technology started with the BCM2837B0, which provides better thermal management. 
 
-A preliminary datasheet for the BCM2711 can be found [here](./rpi_DATA_2711_1p0_preliminary.pdf).
+A datasheet for the BCM2711 can be found [here](./rpi_DATA_2711_1p0.pdf).
 
 ## Some technical details
 
-**Processor:**  Quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5 GHz
+**Processor:**  Quad-core Cortex-A72 (ARM v8) 64-bit SoC @ 1.5 GHz. See [Wikipedia page](https://en.wikipedia.org/wiki/ARM_Cortex-A72) on the A72 for more details.
 
 **Memory:** Accesses up to 4GB LPDDR4-2400 SDRAM (depending on model)
+
+**Caches:** 32 KB data + 48 KB instruction L1 cache per core. 1MB L2 cache.
 
 **Multimedia:** H.265 (4Kp60 decode); H.264 (1080p60 decode, 1080p30 encode); OpenGL ES, 3.0 graphics
 
 **I/O:** PCIe bus, onboard Ethernet port, 2 × DSI ports (only one exposed on Raspberry Pi 4B), 2 × CSI ports (only one exposed on Raspberry Pi 4B), up to 6 × I2C, up to 6 × UART (muxed with I2C), up to 6 × SPI (only five exposed on Raspberry Pi 4B), dual HDMI video output, composite video output.
 
+
 See the following documentation sections for information about the previous Raspberry Pi chips:
 
-* Raspberry Pi 3+ chip [BCM2837B0](../bcm2837bO/README.md)
+* Raspberry Pi 3+ chip [BCM2837B0](../bcm2837b0/README.md)
 * Raspberry Pi 3 chip [BCM2837](../bcm2837/README.md)
 * Raspberry Pi 2 chip [BCM2836](../bcm2836/README.md)
 * Raspberry Pi 1 chip [BCM2835](../bcm2835/README.md)

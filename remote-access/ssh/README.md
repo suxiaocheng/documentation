@@ -16,7 +16,7 @@ You will need to note down the IP address of your Pi in order to connect to it l
 
 ## 2. Enable SSH
 
-As of the November 2016 release, Raspbian has the SSH server disabled by default. It can be enabled manually from the desktop:
+As of the November 2016 release, Raspberry Pi OS has the SSH server disabled by default. It can be enabled manually from the desktop:
 
 1. Launch `Raspberry Pi Configuration` from the `Preferences` menu
 1. Navigate to the `Interfaces` tab
@@ -45,13 +45,14 @@ When enabling SSH on a Pi that may be connected to the internet, you should chan
 
 For headless setup, SSH can be enabled by placing a file named `ssh`, without any extension, onto the boot partition of the SD card from another computer. When the Pi boots, it looks for the `ssh` file. If it is found, SSH is enabled and the file is deleted. The content of the file does not matter; it could contain text, or nothing at all.
 
-If you have loaded Raspbian onto a blank SD card, you will have two partitions. The first one, which is the smaller one, is the boot partition. Place the file into this one.
+If you have loaded Raspberry Pi OS onto a blank SD card, you will have two partitions. The first one, which is the smaller one, is the boot partition. Place the file into this one.
 
 ## 4. Set up your client
 
-SSH is built into Linux distributions and Mac OS. For Windows and mobile devices, third-party SSH clients are available. See the following guides for using SSH with the OS on your computer or device:
+SSH is built into Linux distributions and Mac OS, and is an optional feature in Windows 10. For older Windows versions and mobile devices, third-party SSH clients are available. See the following guides for using SSH with the OS on your computer or device:
 
 - [Linux & Mac OS](unix.md)
+- [Windows 10](windows10.md)
 - [Windows](windows.md)
 - [iOS](ios.md)
 - [Android](android.md)

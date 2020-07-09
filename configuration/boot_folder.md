@@ -1,6 +1,6 @@
 # The boot folder
 
-In a basic Raspbian install, the boot files are stored on the first partition of the SD card, which is formatted with the FAT file system. This means that it can be read on Windows, macOS, and Linux devices.
+In a basic [Raspberry Pi OS](../raspbian/README.md) install, the boot files are stored on the first partition of the SD card, which is formatted with the FAT file system. This means that it can be read on Windows, macOS, and Linux devices.
 
 When the Raspberry Pi is powered on, it loads various files from the boot partition/folder in order to start up the various processors, then it boots the Linux kernel.
 
@@ -35,9 +35,32 @@ Contains many configuration parameters for setting up the Pi. See [the `config.t
 
 Some text-based housekeeping information containing the date and git commit ID of the distribution.
 
+### ssh or ssh.txt
+
+When this file is present, SSH will be enabled on boot. The contents don't matter, it can be empty. SSH is otherwise disabled by default.
+
+### wpa_supplicant.conf
+
+This is the file to configure wireless network settings (if the hardware is capable of it). Edit the country code and the network part to fit your case. More information on how to use this file can be found in [the `wireless/headless` section](./wireless/headless.md).
+
 ### Device Tree files
 
-There are various Device Tree blob files, which have the extension `.dtb`. These contain the hardware definitions of the various models of Raspberry Pi, and are used on boot to set up the kernel according to which Pi model is detected. More [details here](device-tree.md).
+There are various Device Tree blob files, which have the extension `.dtb`. These contain the hardware definitions of the various models of Raspberry Pi, and are used on boot to set up the kernel according to which Pi model is detected. More [details here](device-tree.md#part3.1).
+
+### Kernel Files
+
+The boot folder will contain various [kernel](../linux/kernel/README.md) image files, used for the different Raspberry Pi models:
+
+| Filename | Processor | Raspberry Pi model | Notes |
+| ---------| ----------|-----------------|-------|
+| kernel.img | BCM2835 | Pi Zero, Pi 1 | |
+| kernel7.img| BCM2836, BCM2837 | Pi 2, Pi 3 | Later Pi 2 uses the BCM2837 |
+| kernel7l.img | BCM2711 | Pi 4 | Large Physical Address Extension (LPAE)|
+| kernel8.img  | BCM2837, BCM2711 | Pi 2, Pi 3, Pi 4 | Beta 64 bit kernel<sup>1</sup>. Earlier Pi 2 with BCM2836 do not support 64-bit. |
+
+<sup>1</sup> Information on booting a 64-bit kernel can be found [here](config-txt/boot.md).
+
+Note: The architecture reported by `lscpu` is `armv7l` for 32-bit systems (i.e. everything except kernel8.img), and `aarch64` for 64-bit systems. The `l` in the `armv7l` case refers to the architecture being little-endian, not `LPAE` as is indicated by the `l` in the `kernel7l.img` filename.
 
 ## Device Tree overlays
 

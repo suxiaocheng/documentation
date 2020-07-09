@@ -1,6 +1,8 @@
 # Network booting
 
-This section describes how network booting works. We also have a [tutorial about setting up a working bootable system](net_tutorial.md). Network booting works only for the wired adapter built into certain models of Raspberry Pi. Booting over wireless LAN is not supported, nor is booting from any other wired network device.
+**Network booting is available on Raspberry Pi 3B, 3B+, and 2B v1.2 only.**
+
+This section describes how network booting works. We also have a [tutorial about setting up a working bootable system](net_tutorial.md). Network booting works only for the wired adapter built into the above models of Raspberry Pi. Booting over wireless LAN is not supported, nor is booting from any other wired network device.
 
 To network boot, the boot ROM does the following:
 
@@ -11,20 +13,20 @@ To network boot, the boot ROM does the following:
 * ARP to tftpboot server
 * ARP reply includes tftpboot server ethernet address
 * TFTP RRQ 'bootcode.bin'
-  * File not found: Server replies with TFTP error response with textual error message
-  * File exists: Server will reply with the first block (512 bytes) of data for the file with a block number in the header
-    * Pi replies with TFTP ACK packet containing the block number, and repeats until the last block which is not 512 bytes
+    * File not found: Server replies with TFTP error response with textual error message
+    * File exists: Server will reply with the first block (512 bytes) of data for the file with a block number in the header
+        * Pi replies with TFTP ACK packet containing the block number, and repeats until the last block which is not 512 bytes
 * TFTP RRQ 'bootsig.bin'
-  * This will normally result in an error `file not found`. This is to be expected, and TFTP boot servers should be able to handle it.
+    * This will normally result in an error `file not found`. This is to be expected, and TFTP boot servers should be able to handle it.
 
 From this point the `bootcode.bin` code continues to load the system. The first file it will try to access is [`serial_number`]/start.elf. If this does not result in a error then any other files to be read will be pre-pended with the `serial_number`. This is useful because it enables you to create separate directories with separate start.elf / kernels for your Pis
-To get the serial number for the device you can either try this boot mode and see what file is accessed using tcpdump / wireshark, or you can run a standard Raspbian SD card and `cat /proc/cpuinfo`.
+To get the serial number for the device you can either try this boot mode and see what file is accessed using tcpdump / wireshark, or you can run a standard Raspberry Pi OS SD card and `cat /proc/cpuinfo`.
 
 If you put all your files into the root of your tftp directory then all following files will be accessed from there.
 
-## Debugging the NFS boot mode
+## Debugging the network boot mode
 
-The first thing to check is that the OTP bit is correctly programmed. To do this, you need to add `program_usb_boot_mode=1` to config.txt and reboot (with a standard SD card that boots correctly into Raspbian). Once you've done this, you should be able to do:
+The first thing to check is that the OTP bit is correctly programmed. To do this, you need to add `program_usb_boot_mode=1` to config.txt and reboot (with a standard SD card that boots correctly into Raspberry Pi OS). Once you've done this, you should be able to do:
 
 ```
 $ vcgencmd otp_dump | grep 17:

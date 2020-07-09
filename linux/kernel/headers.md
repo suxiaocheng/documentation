@@ -2,10 +2,10 @@
 
 If you are compiling a kernel module or similar, you will need the Linux Kernel headers. These provide the various function and structure definitions required when compiling code that interfaces with the kernel.
 
-If you have cloned the entire kernel from github, the headers are already included in the source tree. If you don't need all the extra files, it is possible to install only the kernel headers from the Raspbian repo.
+If you have cloned the entire kernel from github, the headers are already included in the source tree. If you don't need all the extra files, it is possible to install only the kernel headers from the Raspberry Pi OS repo.
 
 ```
-sudo apt-get install raspberrypi-kernel-headers
+sudo apt install raspberrypi-kernel-headers
 ```
 Note that it can take quite a while for this command to complete, as it installs a lot of small files. There is no progress indicator.
 

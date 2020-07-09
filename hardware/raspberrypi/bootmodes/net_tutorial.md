@@ -10,12 +10,12 @@ This section only applies to the **original** Raspberry Pi 3B; if you are using 
 
 Before a Raspberry Pi will network boot, it needs to be booted from an SD card with a config option to enable USB boot mode. This will set a bit in the OTP (One Time Programmable) memory in the Raspberry Pi SoC that enables network booting. Once this is done, the SD card is no longer required. 
 
-Install Raspbian Lite (or Raspbian with Raspberry Pi Desktop) on the SD card in the [usual way](../../../installation/installing-images/README.md). 
+Install Raspberry Pi OS Lite (or Raspberry Pi OS with Raspberry Pi Desktop) on the SD card in the [usual way](../../../installation/installing-images/README.md). 
 
 Afterwards, set up USB boot mode by preparing the `/boot` directory with the latest boot files:
 
 ```bash
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt full-upgrade
 ```
 
 Now, enable USB boot mode with the following command:
@@ -64,7 +64,7 @@ sudo umount dev sys proc
 Find the settings of your local network. You need to find the address of your router (or gateway), which can be done with:
 
 ```bash
-ip route | grep default | awk '{print $3}'
+ip route | awk '/default/ {print $3}'
 ```
 
 Then run:
@@ -219,11 +219,12 @@ sudo systemctl restart dnsmasq
 
 This should now allow your Raspberry Pi client to attempt to boot through until it tries to load a root file system (which it doesn't have).
 
-At this point, export the `/nfs/client1` file system created earlier.
+At this point, export the `/nfs/client1` file system created earlier, and the TFTP boot folder.
 
 ```bash
-sudo apt-get install nfs-kernel-server
+sudo apt install nfs-kernel-server
 echo "/nfs/client1 *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
+echo "/tftpboot *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
 ```
 
 Restart RPC-Bind and the NFS server in order to have them detect the new files.
@@ -238,11 +239,14 @@ sudo systemctl restart nfs-kernel-server
 Edit `/tftpboot/cmdline.txt` and from `root=` onwards, and replace it with:
 
 ```
-root=/dev/nfs nfsroot=10.42.0.211:/nfs/client1,vers=3 rw ip=dhcp rootwait elevator=deadline
+root=/dev/nfs nfsroot=10.42.0.211:/nfs/client1,vers=4.1,proto=tcp rw ip=dhcp rootwait elevator=deadline
 ```
 
 You should substitute the IP address here with the IP address you have noted down. Also remove any part of the command line starting with init=.
 
-Finally, edit `/nfs/client1/etc/fstab` and remove the `/dev/mmcblkp1` and `p2` lines (only `proc` should be left).
+Finally, edit `/nfs/client1/etc/fstab` and remove the `/dev/mmcblk0p1` and `p2` lines (only `proc` should be left). Then, add the boot partition back in:
+```
+echo "10.42.0.211:/tftpboot /boot nfs defaults,vers=4.1,proto=tcp 0 0" | sudo tee -a /nfs/client1/etc/fstab
+```
 
 Good luck! If it doesn't boot on the first attempt, keep trying. It can take a minute or so for the Raspberry Pi to boot, so be patient.

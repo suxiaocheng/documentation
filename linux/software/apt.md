@@ -1,6 +1,6 @@
 # APT
 
-The easiest way to manage installing, upgrading, and removing software is using APT (Advanced Packaging Tool) from Debian. If a piece of software is packaged in Debian and it works on the Raspberry Pi's ARM architecture, it should also be available in Raspbian.
+The easiest way to manage installing, upgrading, and removing software is using APT (Advanced Packaging Tool) from Debian. If a piece of software is packaged in Debian and it works on the Raspberry Pi's ARM architecture, it should also be available in Raspberry Pi OS.
 
 To install or remove packages you need root user permissions, so your user needs to be in `sudoers` or you must be logged in as `root`. Read more about [users](../usage/users.md) and [root](../usage/root.md).
 
@@ -79,7 +79,7 @@ sudo apt purge tree
 
 ## Upgrading existing software
 
-If software updates are available, you can get the updates with `sudo apt update` and install the updates with `sudo apt upgrade`, which will upgrade all of your packages. To upgrade a specific package, without upgrading all the other out-of-date packages at the same time, you can use `sudo apt install somepackage` (which may be useful if you're low on disk space or you have limited download bandwidth).
+If software updates are available, you can get the updates with `sudo apt update` and install the updates with `sudo apt full-upgrade`, which will upgrade all of your packages. To upgrade a specific package, without upgrading all the other out-of-date packages at the same time, you can use `sudo apt install somepackage` (which may be useful if you're low on disk space or you have limited download bandwidth).
 
 ## Searching for software
 

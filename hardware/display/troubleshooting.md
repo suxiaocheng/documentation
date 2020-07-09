@@ -8,7 +8,7 @@ Having intermittent problems, or seeing a little rainbow square in the top right
 
 We recommend our official 2.5A adapter because we know it works, but any good 2.5A supply should work.
 
-### Have you updated Raspbian?
+### Have you updated Raspberry Pi OS?
 
 If not, many problems will be solved by making sure your software is up-to date.
 
@@ -16,8 +16,8 @@ You can undo any previous use of `rpi-update` and get your Pi back to the latest
 to a network and running:
 
 ```bash
-sudo apt-get update
-sudo apt-get install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-bootloader
+sudo apt update
+sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-bootloader
 sudo reboot
 ```
 
@@ -25,7 +25,7 @@ sudo reboot
 
 ### My touchscreen doesn't work, or works intermittently
 
-- Make sure you've updated Raspbian (see above for steps)
+- Make sure you've updated Raspberry Pi OS (see above for steps)
 - Check the smaller ribbon cable is seated properly
 
 If you want to make sure your Pi has detected your touchscreen, try running:
@@ -73,7 +73,7 @@ Don't panic! This is perfectly normal.
 
 ### My display is black
 
-* Make sure you've updated Raspbian (see above for steps)
+* Make sure you've updated Raspberry Pi OS (see above for steps)
 * Check the ribbon cable between your Pi and the LCD is properly seated
 * Make sure you have a SD card properly inserted into your Pi
 
@@ -81,7 +81,7 @@ Don't panic! This is perfectly normal.
 
 * Check the larger ribbon cable between the display and driver board is properly seated
 
-### Raspbian says my screen is 752x448. Surely that's wrong?
+### Raspberry Pi OS says my screen is 752x448. Surely that's wrong?
 
 Yes, the screen should be 800x480. This is a result of overscan being enabled.
 
@@ -99,7 +99,7 @@ This is probably also a side-effect of overscan being enabled, try the solution 
 
 ### My screen isn't working with my old Model B or Model A Pi
 
-The Model A or B Pi need a couple of extra connections, and an extra line of config. Please see section "Attaching to Model A/B boards" of [the main display page](README.md).
+The Model A or B Pi need a couple of extra connections, and an extra line of config. Please see [the legacy display support page](legacy.md).
 
 ### Some windows are cut off at the bottom of the screen so I can't use them
 
@@ -178,7 +178,7 @@ Once enabled, right click works by pressing and holding the touchscreen and will
 Install with:
 
 ```bash
-sudo apt-get install florence
+sudo apt install florence
 ```
 
 #### Matchbox Virtual Keyboard
@@ -186,7 +186,7 @@ sudo apt-get install florence
 Install like so:
 
 ```bash
-sudo apt-get install matchbox-keyboard
+sudo apt install matchbox-keyboard
 ```
 
 And then find in **Accessories** > **Keyboard**.

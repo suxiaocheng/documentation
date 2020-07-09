@@ -2,11 +2,11 @@
 
 A powerful feature of the Raspberry Pi is the row of GPIO (general-purpose input/output) pins along the top edge of the board. A 40-pin GPIO header is found on all current Raspberry Pi boards (unpopulated on Pi Zero and Pi Zero W). Prior to the Pi 1 Model B+ (2014), boards comprised a shorter 26-pin header.
 
-![GPIO pins](images/gpio-pins-pi2.jpg)
+![GPIO pins](images/GPIO-Pinout-Diagram-2.png)
 
 Any of the GPIO pins can be designated (in software) as an input or output pin and used for a wide range of purposes.
 
-![GPIO layout](images/gpio-numbers-pi2.png)
+![GPIO layout](images/GPIO.png)
 
 **Note: the numbering of the GPIO pins is not in numerical order; GPIO pins 0 and 1 are present on the board (physical pins 27 and 28) but are reserved for advanced use (see below).**
 
@@ -44,7 +44,7 @@ It's important to be aware of which pin is which. Some people use pin labels (li
 
 ![](images/raspio-portsplus.jpg)
 
-A handy reference can be accessed on the Raspberry Pi by opening a terminal window and running the command `pinout`. This tool is provided by the [GPIO Zero](https://gpiozero.readthedocs.io/) Python library, which it is installed by default on the Raspbian desktop image, but not on Raspbian Lite.
+A handy reference can be accessed on the Raspberry Pi by opening a terminal window and running the command `pinout`. This tool is provided by the [GPIO Zero](https://gpiozero.readthedocs.io/) Python library, which it is installed by default on the Raspberry Pi OS desktop image, but not on Raspberry Pi OS Lite.
 
 ![](images/gpiozero-pinout.png)
 
@@ -57,5 +57,8 @@ It is possible to control GPIO pins using a number of programming languages and 
 - [GPIO with Scratch 1.4](scratch1/README.md)
 - [GPIO with Scratch 2](scratch2/README.md)
 - [GPIO with Python](python/README.md)
+- [GPIO with C/C++ using standard kernel interface via libgpiod](https://kernel.googlesource.com/pub/scm/libs/libgpiod/libgpiod/+/v0.2.x/README.md)
+- [GPIO with C/C++ using 3rd party library pigpio](http://abyz.me.uk/rpi/pigpio/)
+- [GPIO with Processing3](https://processing.org/reference/libraries/io/GPIO.html)
 
 **Warning: while connecting up simple components to the GPIO pins is perfectly safe, it's important to be careful how you wire things up. LEDs should have resistors to limit the current passing through them. Do not use 5V for 3V3 components. Do not connect motors directly to the GPIO pins, instead use an [H-bridge circuit or a motor controller board](https://projects.raspberrypi.org/en/projects/physical-computing/16).**

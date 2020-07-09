@@ -1,9 +1,8 @@
 # USB
 
 ## Page Contents
-
-- [Overview for devices prior to the Pi 4](#overview)  
-- [Overview for the Pi 4](#overview_pi4)   
+- [Overview for devices prior to the Pi 4](#overview)
+- [Overview for the Pi 4](#overview_pi4)
 - [Supported devices](#support)
 - [General limitations (not Pi 4)](#genlimits)
 - [Port power limits](#powerlimits)
@@ -28,9 +27,11 @@ OTG in general supports communication to all types of USB device, but to provide
 <a name="overview_pi4"></a>
 ## Overview for the Pi 4
 
-For the Pi 4, a fully-featured host controller drives the downstream USB ports. Downstream USB is provided by a Via Labs VL805 chip - that supports two USB 2.0 ports and two USB 3.0 ports. This is connected to the BCM2711 SoC using a PCIe link, which is extremely fast. Therefore, the Pi 4 does not have the speed constraints of previous models, which means very fast datarates, especially when using the USB 3.0 ports.
+For the Pi 4, a fully-featured host controller drives the downstream USB ports. Downstream USB is provided by a Via Labs VL805 chip - that supports two USB 2.0 ports and two USB 3.0 ports. This is connected to the BCM2711 SoC using a PCIe link, which is extremely fast. Therefore, the Pi 4 does not have the same speed constraints of previous models, which means very fast data transfer rates, especially when using the USB 3.0 ports. All connected USB 2.0 devices are connected via an internal hub which connects to the upstream PCIe link via a single USB 2.0 bus, giving a maximum combined bandwith for all USB 2.0 devices of 480Mbits/s. All four USB ports on the device are connected to the USB 2.0 hub, whilst the USB 3.0 ports (blue) are ALSO connected to the USB 3.0 bus via the USB 3.0 specific pins in the socket. USB 3.0 devices are constrained only by the total bandwidth available over the PCIe link.
 
-It also means that almost all of the known issues with USB on previous models are no longer present.
+You can use `lsusb -t` to display how the USB devices and hubs are arranged and their allocated speeds. 
+
+Most of the technical limitations of the USB implementation on previous models are no longer present.
 
 The OTG hardware present on previous models of Pi is still available and it has moved to a single connection on the USB-C port. The OTG hardware is intended to be used in device-only mode on Pi 4.
 
@@ -39,7 +40,7 @@ The OTG hardware present on previous models of Pi is still available and it has 
 
 In general, every device supported by Linux is possible to use with the Pi, subject to a few caveats detailed further down. Linux has probably the most comprehensive driver database for legacy hardware of any operating system (it can lag behind for modern device support as it requires open-source drivers for Linux to recognise the device by default).
 
-If you have a device and wish to use it with a Pi, then plug it in. Chances are that it'll "just work". If you are running in a graphical interface (such as the LXDE desktop environment in Raspbian), then it's likely that an icon or similar will pop up announcing the new device.
+If you have a device and wish to use it with a Pi, then plug it in. Chances are that it'll "just work". If you are running in a graphical interface (such as the LXDE desktop environment in Raspberry Pi OS), then it's likely that an icon or similar will pop up announcing the new device.
 
 If the device doesn't appear to work, then refer to the Troubleshooting section below.
 
@@ -59,9 +60,11 @@ The software overhead incurred when talking to Low- and Full-speed devices means
 
 USB devices have defined power requirements, in units of 100mA from 100mA to 500mA. The device advertises its own power requirements to the USB host when it is first connected. In theory, the actual power consumed by the device should not exceed its stated requirement.
 
-The USB ports on a Raspberry Pi have a design loading of 100mA each - sufficient to drive "low-power" devices such as mice and keyboards. Devices such as WiFi adapters, USB hard drives, USB pen drives all consume much more current and should be powered from an external hub with its own power supply. While it is possible to plug a 500mA device into a Pi and have it work with a sufficiently powerful supply, reliable operation is not guaranteed.
+The USB ports on a Raspberry Pi 1 have a design loading of 100mA each - sufficient to drive "low-power" devices such as mice and keyboards. Devices such as wireless LAN adapters, USB hard drives, USB pen drives all consume much more current and should be powered from an external hub with its own power supply. While it is possible to plug a 500mA device into a Raspberry Pi 1 and have it work with a sufficiently powerful supply, reliable operation is not guaranteed. In addition, hotplugging high-power devices into the Raspberry Pi 1's USB ports may cause a brownout which can cause the Pi to reset.
 
-In addition, hotplugging high-power devices into the Pi's USB ports may cause a brownout which can cause the Pi to reset.
+For Raspberry Pi 2, the total power supplied to all USB ports in aggregate is 600mA by default, but can be increased to 1200mA using the `max_usb_current` config.txt entry.
+
+From the Raspberry Pi 3 onwards, the total power supplied to all USB ports in aggregate is 1200mA.
 
 See [Power](../power/README.md) for more information.
 
